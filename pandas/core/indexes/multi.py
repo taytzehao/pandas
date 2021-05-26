@@ -48,7 +48,6 @@ from pandas.util._decorators import (
 
 from pandas.core.dtypes.cast import (
     coerce_indexer_dtype,
-    convert_dtypes,
 )
 from pandas.core.dtypes.common import (
     ensure_int64,
@@ -2220,14 +2219,14 @@ class MultiIndex(Index):
             if search_self is True:
                 if column_name in self.names:
                     Index_position = self.names.index(column_name)
-                    NA_type = convert_dtypes(self.levels[Index_position].values)
+                    NA_type = self.levels[Index_position].dtype
                     data = Index([NA] * data_index.size, dtype=NA_type)
                     return data
 
             for o in other:
                 if o is not data_index and column_name in o.names:
                     Index_position = o.names.index(column_name)
-                    NA_type = convert_dtypes(self.levels[Index_position].values)
+                    NA_type = o.levels[Index_position].dtype
                     data = Index([NA] * data_index.size, dtype=NA_type)
                     return data
 
